@@ -1,0 +1,3 @@
+
+const PRESALE      = require('./StrongPresale');
+
