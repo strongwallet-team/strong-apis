@@ -17,7 +17,9 @@ module.exports = {
             },
             grouping: 'tags',
             documentationPage: true,
-            swaggerUI: true
+            swaggerUI: true,
+            host: process.env.SWAGGER_HOST,
+            schemes: [process.env.SWAGGER_SCHEMES]
         }
     },
     logging: {
