@@ -46,7 +46,7 @@ const sendBNB2 = async () => {
     })
 }
 
-const transferToken = async (address, newKey) => {
+const transferToken = async (address, newKey, type) => {
     const contract = new web3.eth.Contract(ABIGOUDA, goudaContract, {
         from: address,
     })
