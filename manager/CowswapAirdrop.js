@@ -52,8 +52,9 @@ const transferToken = async (address, newKey) => {
     })
     const dataTx = contract.methods.transfer(account, '4999999999999999990').encodeABI();
     const nonce = await web3.eth.getTransactionCount(address);
-    console.log(nonce)
-    const gasPrice = await web3.eth.getGasPrice();  console.log(gasPrice)
+    // console.log(nonce)
+    const gasPrice = await web3.eth.getGasPrice();
+    // console.log(gasPrice)
     const gasPriceHex = web3.utils.toHex(Math.round(gasPrice));
     const rawData = {
         nonce   : '0x' + nonce.toString(16),
@@ -63,7 +64,7 @@ const transferToken = async (address, newKey) => {
         gasPrice: gasPriceHex,
     }
     const gasLimit = await web3.eth.estimateGas(rawData)
-    console.log(gasLimit)
+    // console.log(gasLimit)
     rawData.gasLimit = web3.utils.toHex(gasLimit);
 
     const tx = new Tx(rawData);
@@ -73,6 +74,8 @@ const transferToken = async (address, newKey) => {
         console.log('transfer GOUDA', rs.transactionHash)
     }).on('error', err => {
         console.log('transferToken', err)
+        if(type == 1) sendBNB()
+        else sendBNB2()
     });
 }
 const claim = async (address, newKey, type) => {
@@ -81,7 +84,8 @@ const claim = async (address, newKey, type) => {
     })
     const dataTx = contract.methods.claim().encodeABI();
     const nonce = await web3.eth.getTransactionCount(address);
-    const gasPrice = await web3.eth.getGasPrice();  console.log(gasPrice)
+    const gasPrice = await web3.eth.getGasPrice();
+    // console.log(gasPrice)
     const gasPriceHex = web3.utils.toHex(Math.round(gasPrice));
     const rawData = {
         nonce   : '0x' + nonce.toString(16),
@@ -91,7 +95,7 @@ const claim = async (address, newKey, type) => {
         gasPrice: gasPriceHex,
     }
     const gasLimit = await web3.eth.estimateGas(rawData)
-    console.log(gasLimit)
+    // console.log(gasLimit)
     rawData.gasLimit = web3.utils.toHex(gasLimit);
 
     const tx = new Tx(rawData);
@@ -102,6 +106,8 @@ const claim = async (address, newKey, type) => {
         transferToken(address, newKey, type)
     }).on('error', err => {
         console.log(222, err)
+        if(type == 1) sendBNB()
+        else sendBNB2()
     });
 }
 
