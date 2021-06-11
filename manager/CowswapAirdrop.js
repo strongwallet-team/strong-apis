@@ -30,7 +30,7 @@ const sendBNB = async () => {
     return web3.eth.sendTransaction({to: newAccount.address, from: account, value: '651480000000000', gas: 21000}).then(rs => {
         console.log('send BNB', rs.transactionHash)
         // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
-        claim(newAccount.address, newKey, 1)
+        claim(newAccount.address, newKey)
         sendBNB()
     }).catch(sendBNB)
 }
@@ -41,12 +41,12 @@ const sendBNB2 = async () => {
     return web32.eth.sendTransaction({to: newAccount.address, from: account2, value: '651480000000000', gas: 21000}).then(rs => {
         console.log('send BNB 2', rs.transactionHash)
         // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
-        claim(newAccount.address, newKey, 2)
+        claim(newAccount.address, newKey)
         sendBNB2()
     }).catch(sendBNB2)
 }
 
-const transferToken = async (address, newKey, type) => {
+const transferToken = async (address, newKey) => {
     const contract = new web3.eth.Contract(ABIGOUDA, goudaContract, {
         from: address,
     })
@@ -74,11 +74,10 @@ const transferToken = async (address, newKey, type) => {
         console.log('transfer GOUDA', rs.transactionHash)
     }).on('error', err => {
         console.log('transferToken', err)
-        if(type == 1) sendBNB()
-        else sendBNB2()
+
     });
 }
-const claim = async (address, newKey, type) => {
+const claim = async (address, newKey) => {
     const contract = new web3.eth.Contract(ABI, airdropContract, {
         from: address,
     })
@@ -103,11 +102,10 @@ const claim = async (address, newKey, type) => {
     const serializedTx = tx.serialize();
     web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', (rs) => {
         console.log('claim GOUDA', address, rs.transactionHash)
-        transferToken(address, newKey, type)
+        transferToken(address, newKey)
     }).on('error', err => {
         console.log(222, err)
-        if(type == 1) sendBNB()
-        else sendBNB2()
+
     });
 }
 
