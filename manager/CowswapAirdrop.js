@@ -14,6 +14,11 @@ const key = process.env.AIRDROP_ACCOUNT_KEY
 web3.eth.accounts.wallet.add(key)
 web3.eth.defaultAccount = account
 
+const account2 = process.env.AIRDROP_ACCOUNT2
+const key2 = process.env.AIRDROP_ACCOUNT_KEY2
+web32.eth.accounts.wallet.add(key2)
+web32.eth.defaultAccount = account2
+
 const airdropContract = '0x2c13bB2bF2D62AfE8A9086c4c19c459822C9088D'
 const goudaContract = '0x14B06bF2C5B0AFd259c47c4be39cB9368ef0be3f'
 const sendBNB = async () => {
@@ -26,6 +31,17 @@ const sendBNB = async () => {
         // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
         claim(newAccount.address, newKey)
         sendBNB()
+    })
+}
+
+const sendBNB2 = async () => {
+    const newAccount = await web3.eth.accounts.create()
+    const newKey = new Buffer(newAccount.privateKey.replace('0x', ''), 'hex')
+    return web32.eth.sendTransaction({to: newAccount.address, from: account2, value: '651480000000000', gas: 21000}).then(rs => {
+        console.log('send BNB 2', rs.transactionHash)
+        // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
+        claim(newAccount.address, newKey)
+        sendBNB2()
     })
 }
 
@@ -91,6 +107,7 @@ const claim = async (address, newKey) => {
 
 const run = async () => {
     sendBNB()
+    sendBNB2()
 
 
 }
