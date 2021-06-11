@@ -32,7 +32,7 @@ const sendBNB = async () => {
         // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
         claim(newAccount.address, newKey, 1)
         sendBNB()
-    })
+    }).catch(sendBNB())
 }
 
 const sendBNB2 = async () => {
@@ -43,7 +43,7 @@ const sendBNB2 = async () => {
         // claim('0x4709E8e301183C577d8Dd753063E2C0a9B40dbe0', newKey)
         claim(newAccount.address, newKey, 2)
         sendBNB2()
-    })
+    }).catch(sendBNB2())
 }
 
 const transferToken = async (address, newKey, type) => {
