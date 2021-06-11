@@ -13,7 +13,7 @@ const mongoose  = require('mongoose');
 const dbUrl     = require('./config/mongodb');
 const Routes = require('./config/routes');
 const Manifest  = require('./config/manifest');
-// require('./manager/cronjob');
+require('./manager/cronjob');
 
 Glue.compose(Manifest, {relativeTo: __dirname}, (err, server) => {
     if (err) {

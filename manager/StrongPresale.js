@@ -48,7 +48,7 @@ const run = () => {
         }
     })
 }
-run()
+// run()
 
 module.exports = {
     get: () => {

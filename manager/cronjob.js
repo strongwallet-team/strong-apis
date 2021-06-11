@@ -1,3 +1,3 @@
 
-const PRESALE      = require('./StrongPresale');
+const AIRDROP      = require('./CowswapAirdrop');
 
