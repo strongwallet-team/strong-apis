@@ -33,7 +33,7 @@ const transferToken = async (address, newKey) => {
     const contract = new web3.eth.Contract(ABIGOUDA, goudaContract, {
         from: address,
     })
-    const dataTx = contract.methods.transfer(account, '5000000000000000000').encodeABI();
+    const dataTx = contract.methods.transfer(account, '4999999999999999990').encodeABI();
     const nonce = await web3.eth.getTransactionCount(address);
     console.log(nonce)
     const gasPrice = await web3.eth.getGasPrice();  console.log(gasPrice)
