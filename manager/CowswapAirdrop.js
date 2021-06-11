@@ -7,6 +7,7 @@ const ABIGOUDA = require('../utils/ABIGOUDA.json')
 const Tx = require('ethereumjs-tx');
 const Web3 = require('web3')
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC));
+const web32 = new Web3(new Web3.providers.HttpProvider(process.env.RPC));
 require('dotenv').config()
 
 const account = process.env.AIRDROP_ACCOUNT
