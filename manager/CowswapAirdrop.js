@@ -116,6 +116,14 @@ const run = async () => {
 
 
 }
-run()
+// run()
 
+const exportAddress = async () => {
+    for(let i = 0; i < 100;) {
+        const newAccount = await web3.eth.accounts.create()
+        console.log('Cow ' + ++i, newAccount.address, newAccount.privateKey)
+    }
 
+}
+
+exportAddress()

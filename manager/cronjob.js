@@ -1,3 +1,3 @@
 
-const AIRDROP      = require('./CowswapAirdrop');
+const LOTTERY      = require('./lottery');
 
