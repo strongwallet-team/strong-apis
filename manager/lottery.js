@@ -88,7 +88,7 @@ const handler = async () => {
     if(lottery.status == 1 && Number(lottery.endTime) < (moment().unix())) closeLottery(currentLotteryId)
     if(lottery.status == 2) drawFinalNumberAndMakeLotteryClaimable(currentLotteryId, true)
 }
-const cronjob = new CronJob('*/10 * * * * *', () => {
+const cronjob = new CronJob('*/30 * * * * *', () => {
     handler()
 })
 cronjob.start()
