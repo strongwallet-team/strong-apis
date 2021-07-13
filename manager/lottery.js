@@ -83,7 +83,7 @@ const handler = async () => {
 
     const currentLotteryId = await contract.methods.viewCurrentLotteryId().call()
     const [lottery] = await Promise.all([contract.methods.viewLottery(currentLotteryId).call()])
-    console.log(currentLotteryId, lottery)
+    // console.log(currentLotteryId, lottery)
     if(lottery.status == 3) startLottery()
     if(lottery.status == 1 && Number(lottery.endTime) < (moment().unix())) closeLottery(currentLotteryId)
     if(lottery.status == 2) drawFinalNumberAndMakeLotteryClaimable(currentLotteryId, true)
