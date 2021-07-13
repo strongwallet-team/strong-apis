@@ -55,7 +55,8 @@ const closeLottery = async (currentLotteryId) => {
     }
 }
 const startLottery = async () => {
-    const endtime = Number(moment().unix()) + process.env.MIN_LENGTH_LOTTERY
+    const endtime = Number(moment().unix()) + Number(process.env.MIN_LENGTH_LOTTERY)
+    // console.log(endtime)
     const priceTicketInGouda = process.env.PRICE_TICKET_IN_GOUDA
     const discountDivisor = process.env.DISCOUNT_DIVISOR
     const rewardsBreakdown = [125,375,750,1250,2500,5000]
@@ -82,6 +83,7 @@ const handler = async () => {
 
     const currentLotteryId = await contract.methods.viewCurrentLotteryId().call()
     const [lottery] = await Promise.all([contract.methods.viewLottery(currentLotteryId).call()])
+    console.log(currentLotteryId, lottery)
     if(lottery.status == 3) startLottery()
     if(lottery.status == 1 && Number(lottery.endTime) < (moment().unix())) closeLottery(currentLotteryId)
     if(lottery.status == 2) drawFinalNumberAndMakeLotteryClaimable(currentLotteryId, true)
