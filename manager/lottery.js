@@ -91,4 +91,4 @@ const handler = async () => {
 const cronjob = new CronJob('1 */1 * * * *', () => {
     handler()
 })
-cronjob.start()
+if(process.env.ENV == 'prod') cronjob.start()

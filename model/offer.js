@@ -7,10 +7,16 @@ const Schema 	= mongoose.Schema;
 const moment = require('moment')
 const schema    = new Schema({
     user: String,
+    acceptUser: String,
     txhash: String,
-    seller: String,
-    amountStrong: Number,
-    metaData: {},
+    acceptTxhash: String,
+    nft: String,
+    tokenId: Number,
+    price: Number,
+    side: Number,
+    id: String,
+    status: {type: Number, default: 0},
+    metadata: {},
     createdAt: String
 
 });
@@ -22,7 +28,9 @@ schema.pre("save", function(next) {
     next();
 });
 schema.index({ txhash: 1 }, { unique: true });
+schema.index({ acceptTxhash: 1 });
 schema.index({ user: 1 });
-schema.index({ seller: 1 });
+schema.index({ acceptUser: 1 });
+schema.index({ nft: 1 });
 schema.index({createdAt: 1});
-module.exports = mongoose.model('seller', schema);
+module.exports = mongoose.model('offer', schema);
