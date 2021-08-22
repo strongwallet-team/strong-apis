@@ -10,6 +10,7 @@ module.exports = {
         const limit = req.query.limit || 20
         const sort = req.query.sort || 'asc'
         if(req.query.user) options.user = req.query.user
+        if(req.query.nft) options.user = req.query.nft
         if(req.query.status) options.status = req.query.status
         if(req.query.tokenId) options.tokenId = req.query.tokenId
         if(req.query.fromDate && req.query.toDate) options.createdAt = {$gte: req.query.fromDate, $lte: req.query.toDate}
