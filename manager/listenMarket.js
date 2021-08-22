@@ -81,6 +81,18 @@ const handleEvAcceptOffer = async (event) => {
     }).then()
 
 }
+const handleEvCancelOffer = async (event) => {
+    // console.log(event)
+    Model.findOneAndUpdate({
+        id: event.returnValues.id,
+        status: 0
+    }, {
+        $set: {
+            status: 2
+        }
+    }).then()
+
+}
 const listen = () => {
     contract.events.allEvents().on('data', (event) => {
         // console.log(event)
@@ -90,6 +102,9 @@ const listen = () => {
                 break
             case 'EvAcceptOffer':
                 handleEvAcceptOffer(event)
+                break
+            case 'EvCancelOffer':
+                handleEvCancelOffer(event)
                 break
             default:
                 return -1
