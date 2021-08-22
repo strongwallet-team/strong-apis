@@ -11,6 +11,7 @@ module.exports = {
         const sort = req.query.sort || 'asc'
         if(req.query.user) options.user = req.query.user
         if(req.query.status) options.status = req.query.status
+        if(req.query.tokenId) options.tokenId = req.query.tokenId
         if(req.query.fromDate && req.query.toDate) options.createdAt = {$gte: req.query.fromDate, $lte: req.query.toDate}
         return Model.find(options).limit(limit).skip(skip * limit).sort({
             createdAt: sort

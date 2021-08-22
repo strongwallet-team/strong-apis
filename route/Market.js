@@ -16,6 +16,7 @@ module.exports = {
                 user: Joi.string(),
                 nft: Joi.string(),
                 status: Joi.string(),
+                tokenId: Joi.string(),
                 fromDate: Joi.string(),
                 toDate: Joi.string(),
                 limit: Joi.number().default(20),

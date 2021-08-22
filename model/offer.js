@@ -11,7 +11,7 @@ const schema    = new Schema({
     txhash: String,
     acceptTxhash: String,
     nft: String,
-    tokenId: Number,
+    tokenId: String,
     price: Number,
     side: Number,
     id: String,
