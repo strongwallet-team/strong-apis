@@ -62,7 +62,7 @@ const handleEvNewOffer = async (event) => {
         nft: event.returnValues.nft,
         tokenId: event.returnValues.tokenId,
         status: 0
-    }, {$set: {status: 2}}).then(rs => {
+    }, {$set: {status: 2, updatedAt: moment().unix()}}).then(rs => {
         return model.save()
     })
 
@@ -76,7 +76,8 @@ const handleEvAcceptOffer = async (event) => {
         $set: {
             acceptTxhash: event.transactionHash,
             acceptUser: event.returnValues.user,
-            status: 1
+            status: 1,
+            updatedAt: moment().unix()
         }
     }).then()
 
@@ -88,7 +89,8 @@ const handleEvCancelOffer = async (event) => {
         status: 0
     }, {
         $set: {
-            status: 2
+            status: 2,
+            updatedAt: moment().unix()
         }
     }).then()
 

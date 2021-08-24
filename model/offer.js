@@ -17,7 +17,8 @@ const schema    = new Schema({
     id: String,
     status: {type: Number, default: 0},
     metadata: {},
-    createdAt: String
+    createdAt: String,
+    updatedAt: Number
 
 });
 schema.pre("save", function(next) {
