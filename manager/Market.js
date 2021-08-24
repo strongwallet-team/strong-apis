@@ -2,8 +2,28 @@
 "use strict";
 
 const Model = require('../model/offer')
+const VolumeModel           = require('../model/volume')
 
 module.exports = {
+    getTopPlayer: (req) => {
+        const query = [{
+                $group: {
+                    _id: {user: '$user'},
+                    volume: {$sum: '$volume'},
+                }
+            },
+            { $sort : { volume : -1 } },
+            { $limit : 10 }]
+        return new Promise((resolve, reject) => {
+            VolumeModel.aggregate(query, (err, rs) => {
+                // console.log(rs)
+                if (!err) {
+                    return resolve(rs)
+                }
+
+            });
+        })
+    },
     get: (req) => {
         const options = {}
         const skip = req.query.skip || 0
