@@ -73,14 +73,15 @@ const getVolume = async (user) => {
     const bookKeeperContract = new web3.eth.Contract(BOOKKEEPERABI, process.env.BOOKKEPER_CONTRACT);
     const date = await bookKeeperContract.methods.getDate().call();
     const volume = await bookKeeperContract.methods.getVolume(user, date).call();
+    const volumeEther = volume / 10**18
     const volumeModel = new VolumeModel({
         date,
         user,
-        volume
+        volume: volumeEther
     })
     volumeModel.save().catch(err => {
         if (typeof (err.code) != "undefined" && err.code == 11000) {
-            Model.findOneAndUpdate({user, date}, {$set: {volume}}).then()
+            VolumeModel.findOneAndUpdate({user, date}, {$set: {volume: volumeEther}}).then()
         }
         else console.log(err)
     })
