@@ -59,7 +59,7 @@ module.exports = {
         ],
         "func-style": 0,
         "generator-star-spacing": "error",
-        "global-require": "error",
+        "global-require": 0,
         "guard-for-in": "error",
         "handle-callback-err": "error",
         "id-blacklist": "error",

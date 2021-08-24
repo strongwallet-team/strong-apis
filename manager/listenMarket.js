@@ -2,10 +2,12 @@
 "use strict";
 require('dotenv').config()
 const Model           = require('../model/offer')
+const VolumeModel           = require('../model/volume')
 const moment           = require('moment')
 const BigNumber = require('bignumber.js');
 const rq            = require('request-promise')
 const ABI = require('../utils/MARKET.json')
+const BOOKKEEPERABI = require('../utils/BOOKKEEPERABI.json')
 const COWCARDABI = require('../utils/COWCARDABI.json')
 const Web3WsProvider = require('web3-providers-ws');
 const Web3 = require('web3')
@@ -67,7 +69,28 @@ const handleEvNewOffer = async (event) => {
     })
 
 }
-const handleEvAcceptOffer = async (event) => {
+const getVolume = async (user) => {
+    const bookKeeperContract = new web3.eth.Contract(BOOKKEEPERABI, process.env.BOOKKEPER_CONTRACT);
+    const date = await bookKeeperContract.methods.getDate().call();
+    const volume = await bookKeeperContract.methods.getVolume(user, date).call();
+    const volumeModel = new VolumeModel({
+        date,
+        user,
+        volume
+    })
+    volumeModel.save().catch(err => {
+        if (typeof (err.code) != "undefined" && err.code == 11000) {
+            Model.findOneAndUpdate({user, date}, {$set: {volume}}).then()
+        }
+        else console.log(err)
+    })
+}
+const upsertVolume = async (id) => {
+    const model = await Model.findOne({id})
+    getVolume(model.user)
+    getVolume(model.acceptUser)
+}
+const handleEvAcceptOffer = (event) => {
     // console.log(event)
     Model.findOneAndUpdate({
         id: event.returnValues.id,
@@ -79,10 +102,10 @@ const handleEvAcceptOffer = async (event) => {
             status: 1,
             updatedAt: moment().unix()
         }
-    }).then()
+    }).then(() => upsertVolume(event.returnValues.id))
 
 }
-const handleEvCancelOffer = async (event) => {
+const handleEvCancelOffer = (event) => {
     // console.log(event)
     Model.findOneAndUpdate({
         id: event.returnValues.id,
